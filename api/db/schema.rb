@@ -10,7 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_12_033533) do
+ActiveRecord::Schema.define(version: 2020_12_12_082401) do
+
+  create_table "jobs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.bigint "workflow_id", null: false
+    t.bigint "job_number", null: false
+    t.text "structure", null: false
+    t.datetime "start_at"
+    t.datetime "end_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["workflow_id", "job_number"], name: "index_jobs_on_workflow_id_and_job_number", unique: true
+    t.index ["workflow_id"], name: "index_jobs_on_workflow_id"
+  end
 
   create_table "workflows", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "name", null: false
