@@ -20,6 +20,8 @@ require 'rails_helper'
 
 RSpec.describe Job, type: :model do
   it { should belong_to(:workflow) }
+  it { should have_many(:steps) }
+
   it { should validate_presence_of(:job_number) }
   it { should validate_presence_of(:structure) }
   it { should validate_numericality_of(:job_number).is_greater_than_or_equal_to(1) }

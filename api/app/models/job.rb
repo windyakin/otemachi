@@ -18,6 +18,7 @@
 #
 class Job < ApplicationRecord
   belongs_to :workflow
+  has_many :steps
 
   validates_presence_of :job_number
   validates_presence_of :structure
