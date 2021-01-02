@@ -9,6 +9,8 @@
 #  updated_at :datetime         not null
 #
 class Workflow < ApplicationRecord
+  has_many :jobs
+
   validates_presence_of :name
   validates_presence_of :structure
 
