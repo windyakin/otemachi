@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_12_082421) do
+ActiveRecord::Schema.define(version: 2020_12_31_092601) do
 
   create_table "jobs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.bigint "workflow_id", null: false
@@ -22,6 +22,18 @@ ActiveRecord::Schema.define(version: 2020_12_12_082421) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["workflow_id", "job_number"], name: "index_jobs_on_workflow_id_and_job_number", unique: true
     t.index ["workflow_id"], name: "index_jobs_on_workflow_id"
+  end
+
+  create_table "step_transitions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.string "to_state", null: false
+    t.text "metadata"
+    t.integer "sort_key", null: false
+    t.bigint "step_id", null: false
+    t.boolean "most_recent"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["step_id", "most_recent"], name: "index_step_transitions_parent_most_recent", unique: true
+    t.index ["step_id", "sort_key"], name: "index_step_transitions_parent_sort", unique: true
   end
 
   create_table "steps", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
@@ -41,4 +53,5 @@ ActiveRecord::Schema.define(version: 2020_12_12_082421) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  add_foreign_key "step_transitions", "steps"
 end
