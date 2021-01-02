@@ -16,9 +16,10 @@ RSpec.describe Workflow, type: :model do
   it { should validate_presence_of(:structure) }
 
   describe ':valid_structure_json_format' do
-    it { should allow_value('{}').for(:structure) }
     it { should allow_value('[]').for(:structure) }
-    it { should allow_value('{"example": "JSON format"}').for(:structure) }
-    it { should_not allow_value('{invalid: "JSON format"}').for(:structure) }
+    it { should allow_value('[{"name": "Structure format"}]').for(:structure) }
+    it { should_not allow_value('{}').for(:structure) }
+    it { should_not allow_value('[{name: "invalid JSON format"}]').for(:structure) }
+    it { should_not allow_value('[{"name": "duplicate_name"}, {"name": "duplicate_name"}]').for(:structure) }
   end
 end

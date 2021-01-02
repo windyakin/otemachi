@@ -11,6 +11,6 @@
 FactoryBot.define do
   factory :workflow do
     sequence(:name) { |n| "workflow_#{n}" }
-    structure { '{}' }
+    structure { '[]' }
   end
 end

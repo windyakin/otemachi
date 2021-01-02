@@ -18,13 +18,18 @@ class Workflow < ApplicationRecord
 
   def valid_structure_json_format
     begin
-      structure_hash
+      s = structure_hash
+      unless s.step_names.flatten.length == s.step_names.flatten.uniq.length
+        errors.add(:structure, 'Duplicate step names')
+      end
     rescue JSON::ParserError
       errors.add(:structure, 'Invalid JSON format')
+    rescue ArgumentError
+      errors.add(:structure, 'Invalid structure format')
     end
   end
 
   def structure_hash
-    JSON.parse(structure || '{}')
+    @structure_hash ||= Structure::Master.new(JSON.parse(structure || '[]'))
   end
 end
